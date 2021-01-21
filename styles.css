@@ -149,3 +149,19 @@ button:active {
   text-align: center;
   font-size: 0.8em;
 }
+
+
+
+
+
+
+
+/*---- comecando -----*/
+.titulo-principal-fonte {
+  font-family: 'Lobster', cursive;
+  font-size: 35px;
+}
+
+.link-navbar {
+  font-size: 20px;
+}
