@@ -6,14 +6,14 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="styles.css" />
+	<link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
 	
 	<header>
 		<!--Inserção da NavBar-->
-	  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+	  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between fixed-top">
 		  <a class="navbar-brand titulo-principal-fonte ml-4" href="#">Book Shelf</a>
 		  <button class="navbar-toggler mr-4" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
@@ -22,16 +22,16 @@
 		  <div class="collapse navbar-collapse justify-content-around" id="navbarSupportedContent">
 		    <ul class="navbar-nav">
 		      <li class="nav-item mr-1 ml-1 active">
-		        <a class="nav-link link-navbar" href="#">Currently Reading<span class="sr-only">(current)</span></a>
+		        <a class="nav-link link-navbar" id="currentlyReading" href="#">Currently Reading<span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item mr-1 ml-1">
-		        <a class="nav-link link-navbar" href="#">Want to Read</a>
+		        <a class="nav-link link-navbar"  id="wantToRead" href="#">Want to Read</a>
 		      </li>
 		      <li class="nav-item mr-1 ml-1">
-		        <a class="nav-link link-navbar" href="#">Read</a>
+		        <a class="nav-link link-navbar"  id="read" href="#">Read</a>
 		      </li>
 		    </ul>
-		    <form class="form-inline my-2 my-lg-0 mr-4">
+		    <form id="form" class="form-inline my-2 my-lg-0 mr-4">
 		      <input class="form-control" type="search" placeholder="Search a book..." aria-label="Search" data-input-home>
 		      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		    </form>
@@ -45,46 +45,37 @@
 
   	<div class="list-books-content">
       <div>
-		
 				<div class="bookshelf">
-      		<h2 class="bookshelf-title">Currently Reading</h2>
-        	<div class="bookshelf-books">
-          	<ol class="books-grid">
-            	<li>
-              	<div class="book">
-               		<div class="book-top">
-                  	<div class="book-cover"
-                    	style='width:128px;height:193px;background-image:url("https://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")'>
-                  	</div>
-                  	<div class="book-shelf-changer">
-                    	<select>
-                      	<option value="move" disabled>Move to...</option>
-                      	<option value="currentlyReading">Currently Reading</option>
-                      	<option value="wantToRead">Want to Read</option>
-                      	<option value="read">Read</option>
-                      	<option value="none">None</option>
-                    	</select>
-                  	</div>
-                	</div>
-                	<h3 class="book-title">To Kill a Mockingbird</h3>
-                	<p class="book-authors">Harper Lee</p>
-              	</div>
-            	</li>
-          	</ol>
-        	</div>
+        
+          <ol class="books-grid" id="lista-livros">
+            
+          </ol>
       	</div>
     	</div>
   	</div>
   </main>
 
+  <footer class="rodape">
+	  <div class="text-center p-3 conteudo-rodape d-flex">
+	  	<h3 class="rodape-h">Book Shelf</h3>
+	    <p class="rodape-p">Contact: bookshelf@gmail.com<br>
+	    © 2021 Copyright
+	    </p> 
+	  </div>
+	</footer>
+  
+
 </body>
+
+
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="api.js"></script>
-  <script src="paginacao.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/paginacao.js"></script>
+  <script src="js/currently.js"></script>
 
 </html>

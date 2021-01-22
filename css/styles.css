@@ -20,10 +20,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-body {
-  line-height: 1.5;
-}
-
 body,
 .app {
   background: white;
@@ -31,17 +27,6 @@ body,
 
 /* main page */
 
-.list-books-title {
-  padding: 10px 0;
-  background: #2e7c31;
-  text-align: center;
-}
-
-.list-books-title h1 {
-  font-weight: 400;
-  margin: 0;
-  color: white;
-}
 
 .list-books-content {
   padding: 0 0 80px;
@@ -49,27 +34,25 @@ body,
 }
 
 .bookshelf {
-  padding: 0 10px 20px;
+  padding: 40px 10px;
+  text-align: center;
 }
 
 @media (min-width: 600px) {
   .bookshelf {
-    padding: 0 20px 40px;
+    padding: 85px 20px 40px 20px;
   }
 }
 
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
+  font-weight: bold;
+  margin-bottom: .7rem;
 }
 
-.bookshelf-books {
+/*.bookshelf-books {
   text-align: center;
-}
-
-button:active {
-  border: red;
-  outline: none;
-}
+}removido*/
 
 .search-books-results {
   padding: 80px 10px 20px;
@@ -78,7 +61,7 @@ button:active {
 /* books grid */
 
 .books-grid {
-  list-style-type: none;
+  list-style-type: none; /*remove marcador de lista*/
   padding: 0;
   margin: 0;
   display: flex;
@@ -87,12 +70,12 @@ button:active {
 }
 
 .books-grid li {
-  padding: 10px 15px;
+  padding: 15px 15px;
   text-align: left;
 }
 
 .book {
-  width: 140px;
+  width: 200px;
 }
 
 .book-title,
@@ -114,7 +97,7 @@ button:active {
   display: flex;
   align-items: flex-end;
 }
-
+/*
 .book-shelf-changer {
   position: absolute;
   right: 0;
@@ -137,7 +120,7 @@ button:active {
   cursor: pointer;
 }
 
-/* book cover */
+// book cover// 
 
 .book-cover {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -149,7 +132,7 @@ button:active {
   text-align: center;
   font-size: 0.8em;
 }
-
+*/
 
 
 
@@ -164,4 +147,76 @@ button:active {
 
 .link-navbar {
   font-size: 20px;
+}
+
+.img-livro {
+  width: 198px;
+  height: 298px
+ 
+}
+
+.card-livro {
+  width:200px;
+  height:480px;
+}
+
+.rodape-livro {
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  height: 126px;
+}
+
+.titulo-livro {
+  font-size: 1.1rem;
+  font-weight: bold;
+  flex: auto;
+}
+
+.alinhamento-titulo {
+  height: 68px;
+  width: 100%;
+}
+
+.autor-livro {
+  font-size: 1rem;
+  padding: 0 0 0 10px;
+}
+
+.opcoes-mover {
+  margin: 0 10px;
+}
+
+.conteudo-rodape {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /*background-color: rgba(0, 0, 0, 0.2);*/
+  height: 225px;
+  background-image:url("../img/footer.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 0;
+}
+
+.rodape-p {
+  color: #FFFFFF;
+}
+
+.rodape-h {
+  font-family: 'Lobster', cursive;
+  color: #FFFFFF;
+  font-size: 35px;
+}
+
+@media screen and (min-width: 975px){
+  .books-grid {
+    padding: 0 40px;
+  }
+}
+
+@media screen and (min-width: 1024px){
+  .books-grid {
+    padding: 0 150px;
+  }
 }
