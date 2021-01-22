@@ -1,21 +1,8 @@
+const btnCurrentlyReading = $('#currentlyReading');
 
-
-function carregaCurrentlyReading () {
-	getMyBooks().then((data) => {
-		data.books.forEach(livro => {
-			
-			if(livro.shelf == "currentlyReading"){
-				
-				var imgURL = livro.imageLinks.thumbnail;
-				var autorLivro = livro.authors;
-				var tituloLivro = livro.title;
-					
-				mostraLivros(imgURL, autorLivro, tituloLivro);
-			}
-		})
-
-	}).catch(()=>{
-		console.log("ERRO (Algo de errado na var = carregaCurrentlyReading)");
-	})
-}
-
+btnCurrentlyReading.on('click', () => {
+	removeClasseLi();
+	$('li.liCurrently').addClass('active')
+	booksGrid.empty(); //limpa o conteudo da tag 'ol'
+	carregaLivros(currentlyReading); //add os livros da estante Currently Reading
+})

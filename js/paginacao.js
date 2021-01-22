@@ -1,12 +1,37 @@
 const booksGrid = $('ol#lista-livros')
 
 
-$(document).ready(() => {//ao carregar a pagina ...
+//constantes que servem para passar como parametro na 'function carregaLivros'
+const currentlyReading = 'currentlyReading'
+const wantToRead = 'wantToRead'
+const read = 'read'
 
-	carregaCurrentlyReading();
-		
+$(document).ready(() => {//ao carregar a pagina ...
+	carregaLivros(currentlyReading);	
 });
 
+//função que filtra os livros de acordo com sua 'shelf' recebida por parametro
+//e por fim chama a função 'mostraLivros'
+function carregaLivros (shelf) {
+	getMyBooks().then((data) => {
+		data.books.forEach(livro => {
+			
+			if(livro.shelf == shelf){
+				
+				var imgURL = livro.imageLinks.thumbnail;
+				var autorLivro = livro.authors;
+				var tituloLivro = livro.title;
+					
+				mostraLivros(imgURL, autorLivro, tituloLivro);
+			}
+		})
+
+	}).catch(()=>{
+		console.log("ERRO (Algo de errado na function = carregaLivros)");
+	})
+}
+
+//função que adiciona os dados no DOM
 function mostraLivros(img, autor, titulo){
 	var li = document.createElement('li');
 
@@ -32,4 +57,15 @@ function mostraLivros(img, autor, titulo){
 		`
 
 	booksGrid.append(li);
+}
+
+//
+function removeClasseLi() {
+	if ($('li.liCurrently').hasClass('active')){
+		$('li.liCurrently').removeClass('active')
+	}else if ($('li.liWant').hasClass('active')){
+		$('li.liWant').removeClass('active')
+	}else if ($('li.liRead').hasClass('active')){
+		$('li.liRead').removeClass('active')
+	}
 }
