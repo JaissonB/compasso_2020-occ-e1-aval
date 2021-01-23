@@ -59,7 +59,7 @@ function mostraLivros(img, autor, titulo){
 	booksGrid.append(li);
 }
 
-//
+//função que remove a classe active da ancora selecionada
 function removeClasseLi() {
 	if ($('li.liCurrently').hasClass('active')){
 		$('li.liCurrently').removeClass('active')
