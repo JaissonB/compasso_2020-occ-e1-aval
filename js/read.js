@@ -10,3 +10,11 @@ btnRead.on('click', () => {
 		carregaLivros(read); //add os livros da estante read
 	}
 })
+
+
+
+/*
+console.log($('.opcoes-mover :selected').text())
+select.on('change', () => {
+	console.log($('select :selected').text())
+})*/

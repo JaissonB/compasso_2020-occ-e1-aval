@@ -1,13 +1,12 @@
 const booksGrid = $('ol#lista-livros')
 
-
 //constantes que servem para passar como parametro na 'function carregaLivros'
 const currentlyReading = 'currentlyReading'
 const wantToRead = 'wantToRead'
 const read = 'read'
 
 $(document).ready(() => {//ao carregar a pagina ...
-	carregaLivros(currentlyReading);	
+	carregaLivros(currentlyReading);
 });
 
 //função que filtra os livros de acordo com sua 'shelf' recebida por parametro
@@ -21,8 +20,10 @@ function carregaLivros (shelf) {
 				var imgURL = livro.imageLinks.thumbnail;
 				var autorLivro = livro.authors;
 				var tituloLivro = livro.title;
-					
-				mostraLivros(imgURL, autorLivro, tituloLivro);
+				var id = livro.id;
+
+				mostraLivros(id, imgURL, autorLivro, tituloLivro);
+				removeOption();
 			}
 		})
 
@@ -32,7 +33,7 @@ function carregaLivros (shelf) {
 }
 
 //função que adiciona os dados no DOM
-function mostraLivros(img, autor, titulo){
+function mostraLivros(id, img, autor, titulo){
 	var li = document.createElement('li');
 
 		li.innerHTML=`
@@ -44,12 +45,13 @@ function mostraLivros(img, autor, titulo){
 						<h5 class="card-title titulo-livro text-center">${titulo}</h5>
 						</div>
 						<p class="card-text autor-livro text-secondary">${autor}</p>
+						<div class="d-none id" data-bookId="${id}"></div>
 						<select class="custom-select custom-select-sm opcoes-mover">
-		          <option selected value="move" disabled>Move to..</option>
-		          <option value="currentlyReading">Currently Reading</option>
-		          <option value="wantToRead">Want to Read</option>
-		          <option value="read">Read</option>
-		          <option value="none">Remove</option>
+		          <option id="oMove" value="move" selected disabled>Move to...</option>
+		          <option id="oCurrentlyReading" value="currentlyReading">Currently Reading</option>
+		          <option id="oWantToRead" value="wantToRead">Want to Read</option>
+		          <option id="oRead" value="read">Read</option>
+		          <option id="oRemove" value="remove">Remove</option>
 		        </select>
 		      </div>
 				</div>
@@ -69,3 +71,20 @@ function removeClasseLi() {
 		$('li.liRead').removeClass('active')
 	}
 }
+
+//função que remove a tag option referente a estante selecionada
+function removeOption(){
+	if ($('li.liCurrently').hasClass('active')){
+		$('option#oCurrentlyReading').addClass('d-none')
+	}else if ($('li.liWant').hasClass('active')){
+		$('option#oWantToRead').addClass('d-none')
+	}else if ($('li.liRead').hasClass('active')){
+		$('option#oRead').addClass('d-none')
+	}
+}
+
+
+
+
+
+//onchange

@@ -1,7 +1,7 @@
 let search = $('#search')
 
 search.focus(() => {//quando focado o campode pesquisa limpa a tela e remove a classe das ancoras
-	booksGrid.empty();
+	//booksGrid.empty();
 	removeClasseLi();
 
 	search.on('keyup', () => {//identifica o valor do campo de pesquisa e chama a função searchBooks, também apresenta erro caso o livro não seja encontrado
@@ -10,14 +10,14 @@ search.focus(() => {//quando focado o campode pesquisa limpa a tela e remove a c
 		searchBooks(val).then(data => {
 			booksGrid.empty();
 			data.books.forEach(livro => {
-				mostraLivros(livro.imageLinks.thumbnail, livro.authors, livro.title)
+				mostraLivros(livro.id, livro.imageLinks.thumbnail, livro.authors, livro.title)
 			})
 		}).catch(() => {
 
 			if (val == ""){
 				return
 			}
-			var erroSearch = `
+			const erroSearch = `
 			<div class="erroSearch border">
 				<span class="msgErroTitle">Not Found!</span>
 				<span class="msgErroSubtitle">Book not found.</span>
@@ -26,7 +26,7 @@ search.focus(() => {//quando focado o campode pesquisa limpa a tela e remove a c
 
 			booksGrid.append(erroSearch)
 
-			console.log("ERRO desconhecido")
+			console.log("ERRO na search")
 		})
 	})
 
