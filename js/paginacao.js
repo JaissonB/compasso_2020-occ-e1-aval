@@ -1,39 +1,68 @@
-const booksGrid = $('ol#lista-livros')
-
+const booksGrid = $('section')
+var imgPadrao = 'img/erroCapaFundo.png'
 //constantes que servem para passar como parametro na 'function carregaLivros'
 const currentlyReading = 'currentlyReading'
 const wantToRead = 'wantToRead'
 const read = 'read'
+let shelfAtual = 'currentlyReading';
 
 $(document).ready(() => {//ao carregar a pagina ...
 	carregaLivros(currentlyReading);
+	
 });
 
 //função que filtra os livros de acordo com sua 'shelf' recebida por parametro
 //e por fim chama a função 'mostraLivros'
 function carregaLivros (shelf) {
+	let contLivro = 1;
 	getMyBooks().then((data) => {
 		data.books.forEach(livro => {
 			
 			if(livro.shelf == shelf){
-				
-				var imgURL = livro.imageLinks.thumbnail;
+				contLivro--;
+				var imgURL = imgPadrao
+				if (livro.hasOwnProperty('imageLinks')){
+					imgURL = livro.imageLinks.thumbnail;
+				}
 				var autorLivro = livro.authors;
 				var tituloLivro = livro.title;
 				var id = livro.id;
 
 				mostraLivros(id, imgURL, autorLivro, tituloLivro);
+				$('.spinner').hide()
 				removeOption();
 			}
-		})
 
+			if(contLivro == data.books.length){
+				const semLivro = `
+					<div class="semLivro border">
+						<span class="msgErroTitle">Not Found!</span>
+						<span class="msgErroSubtitle">You don't have books on this shelf.</span>
+						<span class="msgErroP">Add books to this shelf.</span>
+					</div>
+				`
+				$('.spinner').hide()
+				booksGrid.append(semLivro)
+
+				console.log(data.books.length)
+				console.log(contLivro)
+			}
+			
+			contLivro ++;
+			
+			//console.log(data.books)
+		})
+	}).then(()=>{
+		reHabilitaAncoras()
 	}).catch(()=>{
 		console.log("ERRO (Algo de errado na function = carregaLivros)");
 	})
+
 }
 
 //função que adiciona os dados no DOM
 function mostraLivros(id, img, autor, titulo){
+
 	var li = document.createElement('li');
 
 		li.innerHTML=`
@@ -45,8 +74,8 @@ function mostraLivros(id, img, autor, titulo){
 						<h5 class="card-title titulo-livro text-center">${titulo}</h5>
 						</div>
 						<p class="card-text autor-livro text-secondary">${autor}</p>
-						<div class="d-none id" data-bookId="${id}"></div>
-						<select class="custom-select custom-select-sm opcoes-mover">
+						
+						<select data-bookId="${id}" class="custom-select custom-select-sm opcoes-mover">
 		          <option id="oMove" value="move" selected disabled>Move to...</option>
 		          <option id="oCurrentlyReading" value="currentlyReading">Currently Reading</option>
 		          <option id="oWantToRead" value="wantToRead">Want to Read</option>
@@ -83,8 +112,22 @@ function removeOption(){
 	}
 }
 
+function desabilitaAncoras(ancora){
+	if(ancora != 'wantToRead'){
+		btnWantToRead.addClass('disabled')
+	}	if(ancora != 'currentlyReading'){
+		btnCurrentlyReading.addClass('disabled')
+	}	if(ancora != 'read'){
+		btnRead.addClass('disabled')
+	}
+}
 
-
-
-
-//onchange
+function reHabilitaAncoras(){
+	if(btnWantToRead.hasClass('disabled')){
+		btnWantToRead.removeClass('disabled')
+	}	if(btnCurrentlyReading.hasClass('disabled')){
+		btnCurrentlyReading.removeClass('disabled')
+	}	if(btnRead.addClass('disabled')){
+		btnRead.removeClass('disabled')
+	}
+}

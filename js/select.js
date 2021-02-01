@@ -1,32 +1,68 @@
-
-
 $('body').on("change", ".opcoes-mover", function(event) {
-	var tituloAtual = $('.titulo-livro').html()
+	
+	var id = this.dataset.bookid;
 	var option = this.value;
-	var idAtual = ($('.id').data('bookId'))
-	console.log(idAtual);
+	var li = this.parentNode.parentNode.parentNode.parentNode
 
-	
-	
-
-	//buscaId(option);
-	function buscaId(shelf){
+	if(option == 'remove'){
+		let cont = 0;
 		getMyBooks().then((data) => {
 			data.books.forEach(livro => {
 				
-				if(livro.title == 0){
-					
-					var imgURL = livro.imageLinks.thumbnail;
-					var autorLivro = livro.authors;
-					var tituloLivro = livro.title;
-					var id = livro.id;
-
-					mostraLivros(id, imgURL, autorLivro, tituloLivro);
-					removeOption();
+				if(id == livro.id){
+					console.log(data.books[cont])
+					data.books.splice(cont,1)
+					//location.reload()
+					//getBook(`${id}`).then((dado) => {
+					//	dado.book.shelf = "";
+					//	console.log(dado.book.shelf)
+					//})
 				}
+				cont++;
 			})
-
 		})
-	}
-});
+		
 
+		li.remove()
+		return
+	}
+
+	
+
+	//function moveLivro(){
+		updateBook({id}, option).then(()=>{
+			location.reload()
+		})
+
+		//setTimeout(()=>{
+			//recarregaPag()
+			
+		//}, 2000)
+	//}
+	//moveLivro()
+
+	
+	function recarregaPag(){
+		if ($('li.liCurrently').hasClass('active')){
+			shelfAtual = 'currentlyReading'
+		}else if ($('li.liWant').hasClass('active')){
+			shelfAtual = 'wantToRead'
+		}else if ($('li.liRead').hasClass('active')){
+			shelfAtual = 'read'
+		}
+		carregaLivros(shelfAtual)
+		//console.log(shelfAtual + " dentro da função")
+	}
+		//console.log(shelfAtual + " fora da função")
+})
+		
+
+
+
+
+//console.log(this)
+
+//console.log(id)
+//console.log({id})
+
+//booksGrid.empty();
