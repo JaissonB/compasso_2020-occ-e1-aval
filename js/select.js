@@ -4,30 +4,10 @@ $('body').on("change", ".opcoes-mover", function(event) {
 	var option = this.value;
 	var li = this.parentNode.parentNode.parentNode.parentNode
 
+	//usar updateBook para uma shelf nula (null)
 	if(option == 'remove'){
-		let cont = 0;
-		getMyBooks().then((data) => {
-			data.books.forEach(livro => {
-				
-				if(id == livro.id){
-					console.log(data.books[cont])
-					data.books.splice(cont,1)
-					//location.reload()
-					//getBook(`${id}`).then((dado) => {
-					//	dado.book.shelf = "";
-					//	console.log(dado.book.shelf)
-					//})
-				}
-				cont++;
-			})
-		})
-		
-
-		li.remove()
-		return
+		updateBook({id}, null)
 	}
-
-	
 
 	//function moveLivro(){
 		updateBook({id}, option).then(()=>{
