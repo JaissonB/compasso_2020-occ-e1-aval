@@ -1,3 +1,4 @@
+const bookShelf = $('div.bookshelf')
 const booksGrid = $('section')
 var imgPadrao = 'img/erroCapaFundo.png'
 //constantes que servem para passar como parametro na 'function carregaLivros'
@@ -7,57 +8,92 @@ const read = 'read'
 let shelfAtual = 'currentlyReading';
 
 $(document).ready(() => {//ao carregar a pagina ...
-	carregaLivros(currentlyReading);
-	
+	carregaLivros();
 });
 
 //função que filtra os livros de acordo com sua 'shelf' recebida por parametro
 //e por fim chama a função 'mostraLivros'
-function carregaLivros (shelf) {
-	let contLivro = 1;
+function carregaLivros () {
+	let contLivrosCurrently = 0;
+	let contLivrosRead = 0;
+	let contLivrosWantToRead = 0;
+
 	getMyBooks().then((data) => {
 		data.books.forEach(livro => {
-			
-			if(livro.shelf == shelf){
-				contLivro--;
-				var imgURL = imgPadrao
-				if (livro.hasOwnProperty('imageLinks')){
-					imgURL = livro.imageLinks.thumbnail;
-				}
-				var autorLivro = livro.authors;
-				var tituloLivro = livro.title;
-				var id = livro.id;
+			removeClasseDNone()
+			var imgURL = 'img/erroCapaFundo.png';
 
-				mostraLivros(id, imgURL, autorLivro, tituloLivro);
-				$('.spinner').hide()
-				removeOption();
+			if (livro.hasOwnProperty('imageLinks')){
+				imgURL = livro.imageLinks.thumbnail;
 			}
+			var autorLivro = livro.authors;
+			var tituloLivro = livro.title;
+			var id = livro.id;
 
-			if(contLivro == data.books.length){
-				const semLivro = `
-					<div class="semLivro border">
-						<span class="msgErroTitle">Not Found!</span>
-						<span class="msgErroSubtitle">You don't have books on this shelf.</span>
-						<span class="msgErroP">Add books to this shelf.</span>
-					</div>
-				`
-				$('.spinner').hide()
-				booksGrid.append(semLivro)
-
-				console.log(data.books.length)
-				console.log(contLivro)
+			var li = `
+			<li>
+			<div class="book">
+				<div class="card card-livro">
+					<img src="${imgURL}" class="card-img-top img-livro"/>
+					<div class="card-body rodape-livro">
+						<div class="alinhamento-titulo d-flex align-items-center">
+						<h5 class="card-title titulo-livro text-center">${tituloLivro}</h5>
+						</div>
+						<p class="card-text autor-livro text-secondary">${autorLivro}</p>
+						
+						<select data-bookId="${id}" class="custom-select custom-select-sm opcoes-mover">
+		          <option id="oMove" value="move" selected disabled>Move to...</option>
+		          <option id="oCurrentlyReading" value="currentlyReading">Currently Reading</option>
+		          <option id="oWantToRead" value="wantToRead">Want to Read</option>
+		          <option id="oRead" value="read">Read</option>
+		          <option id="oRemove" value="remove">Remove</option>
+		        </select>
+		      </div>
+				</div>
+			</div>
+			</li>
+			`
+			
+			if(livro.shelf == currentlyReading){
+				var section = $('section.lendo')
+				section.append(li);
+				contLivrosCurrently++;
 			}
-			
-			contLivro ++;
-			
-			//console.log(data.books)
+			else if(livro.shelf == wantToRead){
+				var section = $('section.ler')
+				section.append(li);
+				contLivrosWantToRead++;
+			}
+			else if(livro.shelf == read){
+				var section = $('section.lido')
+				section.append(li);
+				contLivrosRead++;
+			}
+			removeOption()
+			$('.spinner').hide()
 		})
 	}).then(()=>{
-		reHabilitaAncoras()
-	}).catch(()=>{
-		console.log("ERRO (Algo de errado na function = carregaLivros)");
+		if(contLivrosCurrently==0){
+			shelfVazia($('section.lendo'))
+		}if(contLivrosWantToRead==0){
+			shelfVazia($('section.ler'))
+		}if(contLivrosRead==0){
+			shelfVazia($('section.lido'))
+		}
 	})
+}
 
+//funcao chamada na 'carregaLivros' para adicionar mensagem de erro caso a shelf esteja vazia
+function shelfVazia(section){
+	const semLivro = `
+		<div class="semLivro border">
+			<span class="msgErroTitle">Not Found!</span>
+			<span class="msgErroSubtitle">You don't have books on this shelf.</span>
+			<span class="msgErroP">Add books to this shelf.</span>
+		</div>
+	`
+	$('.spinner').hide()
+	section.append(semLivro)
 }
 
 //função que adiciona os dados no DOM
@@ -77,9 +113,9 @@ function mostraLivros(id, img, autor, titulo){
 						
 						<select data-bookId="${id}" class="custom-select custom-select-sm opcoes-mover">
 		          <option id="oMove" value="move" selected disabled>Move to...</option>
-		          <option id="oCurrentlyReading" value="currentlyReading">Currently Reading</option>
-		          <option id="oWantToRead" value="wantToRead">Want to Read</option>
-		          <option id="oRead" value="read">Read</option>
+		          <option class="optionC" id="oCurrentlyReading" value="currentlyReading">Currently Reading</option>
+		          <option class="optionW" id="oWantToRead" value="wantToRead">Want to Read</option>
+		          <option class="optionR" id="oRead" value="read">Read</option>
 		          <option id="oRemove" value="remove">Remove</option>
 		        </select>
 		      </div>
@@ -88,6 +124,7 @@ function mostraLivros(id, img, autor, titulo){
 		`
 
 	booksGrid.append(li);
+	$('.spinner').hide();
 }
 
 //função que remove a classe active da ancora selecionada
@@ -103,6 +140,10 @@ function removeClasseLi() {
 
 //função que remove a tag option referente a estante selecionada
 function removeOption(){
+	$('option#oCurrentlyReading').removeClass('d-none')
+	$('option#oWantToRead').removeClass('d-none')
+	$('option#oRead').removeClass('d-none')
+
 	if ($('li.liCurrently').hasClass('active')){
 		$('option#oCurrentlyReading').addClass('d-none')
 	}else if ($('li.liWant').hasClass('active')){
@@ -112,22 +153,10 @@ function removeOption(){
 	}
 }
 
-function desabilitaAncoras(ancora){
-	if(ancora != 'wantToRead'){
-		btnWantToRead.addClass('disabled')
-	}	if(ancora != 'currentlyReading'){
-		btnCurrentlyReading.addClass('disabled')
-	}	if(ancora != 'read'){
-		btnRead.addClass('disabled')
-	}
-}
-
-function reHabilitaAncoras(){
-	if(btnWantToRead.hasClass('disabled')){
-		btnWantToRead.removeClass('disabled')
-	}	if(btnCurrentlyReading.hasClass('disabled')){
-		btnCurrentlyReading.removeClass('disabled')
-	}	if(btnRead.addClass('disabled')){
-		btnRead.removeClass('disabled')
-	}
+function removeClasseDNone(){
+	$('option#oCurrentlyReading').removeClass('d-none');
+	$('option#oWantToRead').removeClass('d-none');
+	$('option#oRead').removeClass('d-none');
+	$('option#oRemove').removeClass('d-none');
+	search.val("");
 }

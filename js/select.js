@@ -4,45 +4,44 @@ $('body').on("change", ".opcoes-mover", function(event) {
 	var option = this.value;
 	var li = this.parentNode.parentNode.parentNode.parentNode
 
-	//usar updateBook para uma shelf nula (null)
+	//remove livro de qualquer shelf
 	if(option == 'remove'){
-		updateBook({id}, null)
-	}
-
-	//function moveLivro(){
+		console.log(option)
 		updateBook({id}, option).then(()=>{
-			location.reload()
+			booksGrid.empty()
+			$('.spinner').show()
+			carregaLivros()
 		})
-
-		//setTimeout(()=>{
-			//recarregaPag()
-			
-		//}, 2000)
-	//}
-	//moveLivro()
-
-	
-	function recarregaPag(){
-		if ($('li.liCurrently').hasClass('active')){
-			shelfAtual = 'currentlyReading'
-		}else if ($('li.liWant').hasClass('active')){
-			shelfAtual = 'wantToRead'
-		}else if ($('li.liRead').hasClass('active')){
-			shelfAtual = 'read'
-		}
-		carregaLivros(shelfAtual)
-		//console.log(shelfAtual + " dentro da função")
+		return
 	}
-		//console.log(shelfAtual + " fora da função")
+
+	//quando fizer o 'select' enquanto se pesquisa algum livro
+	if(!($('li.liWant').hasClass('active')) &&
+	!($('li.liCurrently').hasClass('active')) &&
+	!($('li.liRead').hasClass('active'))){
+		var conteudo = search.val().trim();
+		updateBook({id}, option).then(()=>{
+			booksGrid.empty()
+			$('.spinner').show()
+			searchBooks(conteudo).then(data => {
+				booksGrid.empty();
+				data.books.forEach(livro => {
+					$('option#oRemove').addClass('d-none')
+					var imgURL = imgPadrao;
+
+					//se a o livro tiver imagem adiciona ela, senão fica a imagem padrão
+					if (livro.hasOwnProperty('imageLinks')){
+						imgURL = livro.imageLinks.thumbnail;
+					}
+					mostraLivros(livro.id, imgURL, livro.authors, livro.title)
+				})
+			})
+		})
+	}else{
+		updateBook({id}, option).then(()=>{
+			booksGrid.empty()
+			$('.spinner').show()
+			carregaLivros()
+		})
+	}
 })
-		
-
-
-
-
-//console.log(this)
-
-//console.log(id)
-//console.log({id})
-
-//booksGrid.empty();

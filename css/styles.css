@@ -25,9 +25,6 @@ body,
   background: white;
 }
 
-/* main page */
-
-
 .list-books-content {
   padding: 0 0 30px;
   flex: 1;
@@ -38,31 +35,15 @@ body,
   text-align: center;
 }
 
-@media (min-width: 600px) {
-  .bookshelf {
-    padding: 100px 20px 40px 20px;
-  }
-
-  .list-books-content {
-    padding: 0 0 80px;
-  }
-}
-
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
   font-weight: bold;
   margin-bottom: .7rem;
 }
 
-/*.bookshelf-books {
-  text-align: center;
-}removido*/
-
 .search-books-results {
   padding: 80px 10px 20px;
 }
-
-/* books grid */
 
 .books-grid {
   list-style-type: none; /*remove marcador de lista*/
@@ -102,9 +83,6 @@ body,
   align-items: flex-end;
 }
 
-
-
-/*---- comecando -----*/
 .titulo-principal-fonte {
   font-family: 'Lobster', cursive;
   font-size: 35px;
@@ -116,6 +94,10 @@ body,
 
 .link-navbar {
   font-size: 20px;
+}
+
+.input {
+  margin-left: 8px; 
 }
 
 .img-livro {
@@ -130,26 +112,35 @@ body,
 }
 
 .rodape-livro {
-  padding: 10px 0;
+  padding: 15px 0 0 0;
   display: flex;
   flex-wrap: wrap;
-  height: 126px;
+  height: 100px;
 }
 
 .titulo-livro {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: bold;
   flex: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 5px;
+  margin-bottom: 0;
 }
 
 .alinhamento-titulo {
-  height: 68px;
+  height: 40px;
   width: 100%;
 }
 
 .autor-livro {
   font-size: 1rem;
   padding: 0 0 0 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 0;
 }
 
 .opcoes-mover {
@@ -161,7 +152,6 @@ body,
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  /*background-color: rgba(0, 0, 0, 0.2);*/
   height: 207px;
   background-image:url("../img/footer.jpg");
   background-repeat: no-repeat;
@@ -177,24 +167,6 @@ body,
   font-family: 'Lobster', cursive;
   color: #FFFFFF;
   font-size: 35px;
-}
-
-@media screen and (min-width: 975px){
-  .books-grid {
-    padding: 0 40px;
-  }
-}
-
-@media screen and (min-width: 1024px){
-  .books-grid {
-    padding: 0 150px;
-  }
-}
-
-@media screen and (max-width: 610px){
-  .conteudo-rodape {
-    background-size: 190%;
-  }
 }
 
 .erroSearch, .pesquise, .semLivro {
@@ -232,5 +204,31 @@ body,
   font-family: 'Sriracha', cursive;
 }
 
+.none {
+  display: none;
+}
 
 
+
+
+@media (min-width: 600px) {
+  .bookshelf {
+    padding: 100px 20px 40px 20px;
+  }
+
+  .list-books-content {
+    padding: 0 0 80px;
+  }
+}
+
+@media screen and (min-width: 975px){
+  .books-grid {
+    padding: 0 40px;
+  }
+}
+
+@media screen and (max-width: 610px){
+  .conteudo-rodape {
+    background-size: 190%;
+  }
+}
